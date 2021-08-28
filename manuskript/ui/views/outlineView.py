@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # --!-- coding: utf8 --!--
-from PyQt5.QtWidgets import QTreeView, QHeaderView
+from PyQt5.QtWidgets import QTreeView, QHeaderView, QAction
 
 from manuskript import settings
 from manuskript.enums import Outline
@@ -86,3 +86,20 @@ class outlineView(QTreeView, dndView, outlineBasics):
     def mouseReleaseEvent(self, event):
         QTreeView.mouseReleaseEvent(self, event)
         outlineBasics.mouseReleaseEvent(self, event)
+
+    def makePopupMenu(self):
+        menu = outlineBasics.makePopupMenu(self)
+        first = menu.actions()[3]
+
+        # Expand /collapse all
+        self.actExpandAll = QAction(self.tr("Expand All"), menu)
+        self.actExpandAll.triggered.connect(self.expandAll)
+        menu.insertAction(first, self.actExpandAll)
+
+        self.actCollapseAll = QAction(self.tr("Collapse All"), menu)
+        self.actCollapseAll.triggered.connect(self.collapseAll)
+        menu.insertAction(first, self.actCollapseAll)
+
+        menu.insertSeparator(first)
+
+        return menu

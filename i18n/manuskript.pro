@@ -57,6 +57,7 @@ SOURCES +=  ../manuskript/ui/views/cmbOutlineLabelChoser.py
 SOURCES +=  ../manuskript/ui/views/plotDelegate.py
 SOURCES +=  ../manuskript/ui/views/plotTreeView.py
 SOURCES +=  ../manuskript/ui/views/treeView.py
+SOURCES +=  ../manuskript/ui/views/outlineView.py
 SOURCES +=  ../manuskript/ui/views/characterTreeView.py
 SOURCES +=  ../manuskript/ui/views/storylineView.py
 SOURCES +=  ../manuskript/ui/views/MDEditCompleter.py
