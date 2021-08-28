@@ -119,15 +119,16 @@ def prepare(arguments, tests=False):
 
     def respectSystemDarkThemeSetting():
         """Adjusts the Qt theme to match the OS 'dark theme' setting configured by the user."""
-        if platform.system() != 'Windows':
-            return
+        #if platform.system() != 'Windows':
+        #    return
 
         # Basic Windows 10 Dark Theme support.
         # Source: https://forum.qt.io/topic/101391/windows-10-dark-theme/4
-        themeSettings = QSettings(
-            "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
-            QSettings.NativeFormat)
-        if themeSettings.value("AppsUseLightTheme") == 0:
+        #themeSettings = QSettings(
+        #    "HKEY_CURRENT_USER\\Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize",
+        #    QSettings.NativeFormat)
+        #if themeSettings.value("AppsUseLightTheme") == 0:
+        if True:
             darkPalette = QPalette()
             darkColor = QColor(45, 45, 45)
             disabledColor = QColor(127, 127, 127)
