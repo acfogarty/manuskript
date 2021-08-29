@@ -1,10 +1,10 @@
 #!/usr/bin/env python
 # --!-- coding: utf8 --!--
 from PyQt5.QtCore import Qt, QSignalMapper, QSize
-from PyQt5.QtGui import QIcon, QCursor
+from PyQt5.QtGui import QIcon, QCursor, QKeySequence
 from PyQt5.QtWidgets import QAbstractItemView, qApp, QMenu, QAction, \
                             QListWidget, QWidgetAction, QListWidgetItem, \
-                            QLineEdit, QInputDialog, QMessageBox, QCheckBox
+                            QLineEdit, QInputDialog, QMessageBox, QCheckBox, QShortcut
 
 from manuskript import settings
 from manuskript.enums import Outline
@@ -18,6 +18,9 @@ class outlineBasics(QAbstractItemView):
     def __init__(self, parent=None):
         self._indexesToOpen = None
         self.menuCustomIcons = None
+
+        self.shortcut = QShortcut(QKeySequence('F3'), self)
+        self.shortcut.activated.connect(self.openPopupMenu)
 
     def getSelection(self):
         sel = []
@@ -36,6 +39,12 @@ class outlineBasics(QAbstractItemView):
         # outlineBasics is never subclassed alone. So the others views
         # (outlineView, corkView, treeView) that subclass outlineBasics
         # call their respective mother class.
+
+    def openPopupMenu(self):
+        print('here')
+        self.menu = self.makePopupMenu()
+        self.menu.popup(event.globalPos())
+
 
     def makePopupMenu(self):
         index = self.currentIndex()
