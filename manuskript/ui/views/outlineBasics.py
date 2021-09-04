@@ -309,12 +309,17 @@ class outlineBasics(QAbstractItemView):
         """
         Shows a warning, and then deletes currently selected indexes.
         """
+        selection = self.getSelection()
+
         if not settings.dontShowDeleteWarning:
+            titlesList = "".join(["<li>{}</li>".format(s.internalPointer().title())
+                                  for s in selection])
             msg = QMessageBox(QMessageBox.Warning,
                 qApp.translate("outlineBasics", "About to remove"),
                 qApp.translate("outlineBasics",
                     "<p><b>You're about to delete {} item(s).</b></p><p>Are you sure?</p>"
-                    ).format(len(self.getSelection())),
+                    ).format(len(selection)) +
+                    "<ul>{}</ul>".format(titlesList),
                 QMessageBox.Yes | QMessageBox.Cancel)
 
             chk = QCheckBox("&Don't show this warning in the future.")
@@ -327,7 +332,7 @@ class outlineBasics(QAbstractItemView):
             if chk.isChecked():
                 settings.dontShowDeleteWarning = True
 
-        self.model().removeIndexes(self.getSelection())
+        self.model().removeIndexes(selection)
 
     def duplicate(self):
         """
