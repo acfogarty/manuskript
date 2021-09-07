@@ -2000,6 +2000,45 @@
             </item>
            </layout>
           </widget>
+          <widget class="QWidget" name="lytTabStatistics">
+           <attribute name="title">
+            <string>Statistics</string>
+           </attribute>
+           <layout class="QHBoxLayout" name="horizontalLayout_59">
+            <item>
+             <widget class="QLabel" name="lblStatsWC">
+              <property name="minimumSize">
+               <size>
+                <width>10</width>
+                <height>0</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLabel" name="lblStatsProgress">
+              <property name="minimumSize">
+               <size>
+                <width>100</width>
+                <height>6</height>
+               </size>
+              </property>
+              <property name="maximumSize">
+               <size>
+                <width>200</width>
+                <height>14</height>
+               </size>
+              </property>
+              <property name="text">
+               <string/>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
           <widget class="QWidget" name="lytTabDebug">
            <attribute name="title">
             <string>Debug</string>
@@ -2067,6 +2106,16 @@
                <layout class="QVBoxLayout" name="verticalLayout_34">
                 <item>
                  <widget class="QTreeView" name="treeDebugWorld"/>
+                </item>
+               </layout>
+              </widget>
+              <widget class="QWidget" name="tab_21">
+               <attribute name="title">
+                <string>Statistics</string>
+               </attribute>
+               <layout class="QVBoxLayout" name="verticalLayout_41">
+                <item>
+                 <widget class="QTreeView" name="treeDebugStuff"/>
                 </item>
                </layout>
               </widget>

@@ -246,6 +246,12 @@ class outlineItem(abstractItem, searchableItem):
         if self.parent():
             self.parent().updateWordCount()
 
+    def integer_stats(self):
+        wc = self.data(enums.Outline.wordCount)
+        goal = self.data(enums.Outline.goal)
+
+        return wc, goal
+
     def stats(self):
         wc = self.data(enums.Outline.wordCount)
         goal = self.data(enums.Outline.goal)
@@ -363,6 +369,19 @@ class outlineItem(abstractItem, searchableItem):
 
         for c in self.children():
             lst.extend(c.findItemsByPOV(POV))
+
+        return lst
+
+    def findCompiledItems(self):
+        """
+        Find all text items where compile==True
+        """
+        lst = []
+        if self.compile() and self.isText():
+            lst.append(self)
+
+        for c in self.children():
+            lst.extend(c.findCompiledItems())
 
         return lst
 
