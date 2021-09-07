@@ -188,7 +188,7 @@ class MarkdownHighlighter(BasicHighlighter):
                     MS.MarkdownStatePipeTableRow]:
                 fmt = QTextCharFormat()
                 f = fmt.font()
-                f.setFamily("Monospace")
+                f.setFamily("Arial")
                 fmt.setFont(f)
                 self.setFormat(0, len(text), fmt)
 
@@ -196,7 +196,7 @@ class MarkdownHighlighter(BasicHighlighter):
             i = 0
             while i <= len(text)-1 and text[i] in [" ", "\t"]:
                 fmt = self.format(i)
-                fmt.setFontFamily("Monospace")
+                fmt.setFontFamily("Arial")
                 self.setFormat(i, 1, fmt)
                 i += 1
 
@@ -512,7 +512,7 @@ class MarkdownHighlighter(BasicHighlighter):
         if theme.get("background"):
             format.setBackground(theme["background"])
         if theme.get("monospace"):
-            format.setFontFamily("Monospace")
+            format.setFontFamily("Arial")
         if theme.get("bold"):
             format.setFontWeight(QFont.Bold)
         if theme.get("italic"):
@@ -540,7 +540,7 @@ class MarkdownHighlighter(BasicHighlighter):
         if theme.get("markupBackground"):
             markupFormat.setBackground(theme["markupBackground"])
         if theme.get("markupMonospace"):
-            markupFormat.setFontFamily("Monospace")
+            markupFormat.setFontFamily("Arial")
 
         return format, markupFormat
 
