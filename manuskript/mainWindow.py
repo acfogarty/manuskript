@@ -11,6 +11,10 @@ from PyQt5.QtGui import QStandardItemModel, QIcon, QColor
 from PyQt5.QtWidgets import QMainWindow, QHeaderView, qApp, QMenu, QActionGroup, QAction, QStyle, QListWidgetItem, \
     QLabel, QDockWidget, QWidget, QMessageBox, QLineEdit
 
+from PyQt5.QtCore import QRect, QPoint
+from PyQt5.QtGui import QPixmap, QPainter
+from manuskript.functions import drawProgress
+
 from manuskript import settings
 from manuskript.enums import Character, PlotStep, Plot, World, Outline
 from manuskript.functions import wordCount, appPath, findWidgetsOfClass, openURL, showInFolder
@@ -53,7 +57,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     TabWorld = 4
     TabOutline = 5
     TabRedac = 6
-    TabDebug = 7
+    TabStatistics = 7
+    TabDebug = 8
 
     SHOW_DEBUG_TAB = False
 
@@ -1099,6 +1104,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.lstDebugLabels.setModel(self.mdlLabels)
         self.lstDebugStatus.setModel(self.mdlStatus)
 
+        # Statistics tab
+        self.updateStatisticsTab()
+
     def disconnectAll(self, signal, oldHandler=None):
         # Disconnect all "oldHandler" slot connections for a signal
         #
@@ -1309,6 +1317,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                      F.themeIcon("world"),
                      F.themeIcon("outline"),
                      QIcon.fromTheme("gtk-edit"),
+                     QIcon.fromTheme("applications-debugging"),
                      QIcon.fromTheme("applications-debugging")
             ]
             self.tabMain.setTabIcon(i, icons[i])
@@ -1700,3 +1709,22 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.dialog = exporterDialog(mw=self)
         self.dialog.show()
         self.centerChildWindow(self.dialog)
+
+    def updateStatisticsTab(self):
+        compiled_textitems = self.mdlOutline.findCompiledItems()
+        tuples = [item.integer_stats() for item in compiled_textitems]
+        wc = sum([t[0] if isinstance(t[0], int) else 0 for t in tuples])
+        goal = sum([t[1] if isinstance(t[1], int) else 0 for t in tuples])
+        self.lblStatsWC.setText("{} words / {}".format(wc, goal))
+
+        if goal > 0:
+            progress = wc / goal
+            self.lblStatsProgress.show()
+            rect = self.lblStatsProgress.geometry()
+            rect = QRect(QPoint(0, 0), rect.size())
+            self.px = QPixmap(rect.size())
+            self.px.fill(Qt.transparent)
+            p = QPainter(self.px)
+            drawProgress(p, rect, progress, 2)
+            del p
+            self.lblStatsProgress.setPixmap(self.px)

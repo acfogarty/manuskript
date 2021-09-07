@@ -15,6 +15,9 @@ class outlineModel(abstractModel, searchableModel):
         "Returns a list of IDs of all items whose POV is ``POV``."
         return self.rootItem.findItemsByPOV(POV)
 
+    def findCompiledItems(self):
+        return self.rootItem.findCompiledItems()
+
     def searchableItems(self):
         result = []
 
