@@ -38,6 +38,8 @@ from manuskript.ui.views.outlineDelegates import outlineCharacterDelegate
 from manuskript.ui.views.plotDelegate import plotDelegate
 from manuskript.ui.views.MDEditView import MDEditView
 from manuskript.ui.statusLabel import statusLabel
+from manuskript.ui.plotWindow import plotWindow
+from manuskript.ui.plotWindow2 import MplCanvas
 
 # Spellcheck support
 from manuskript.ui.views.textEditView import textEditView
@@ -1711,6 +1713,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.centerChildWindow(self.dialog)
 
     def updateStatisticsTab(self):
+        print('updating statistics tab')
         compiled_textitems = self.mdlOutline.findCompiledItems()
         tuples = [item.integer_stats() for item in compiled_textitems]
         wc = sum([t[0] if isinstance(t[0], int) else 0 for t in tuples])
@@ -1728,3 +1731,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             drawProgress(p, rect, progress, 2)
             del p
             self.lblStatsProgress.setPixmap(self.px)
+
+        titles = [item.title() for item in compiled_textitems]
+        status = [item.status() for item in compiled_textitems]
+        status = [int(i) if i else 0 for i in status]
+
+        print(titles)
+
+        #heatmap = plotWindow(self.statsHeatmap) 
+        #heatmap = MplCanvas(self.statsHeatmap) 
+        canvas = MplCanvas()
+        canvas.barplot(y=status, xticklabels=titles)
+        self.statsPageLayout.addWidget(canvas)
+        #self.statsHeatmap = canvas

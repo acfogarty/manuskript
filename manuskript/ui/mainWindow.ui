@@ -2004,7 +2004,12 @@
            <attribute name="title">
             <string>Statistics</string>
            </attribute>
+           <layout class="QVBoxLayout" name="statsPageLayout">
+           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_59">
+            <item>
+             <widget class="QWidget" name="statsHeatmap" />
+            </item>
             <item>
              <widget class="QLabel" name="lblStatsWC">
               <property name="minimumSize">
@@ -2037,6 +2042,8 @@
               </property>
              </widget>
             </item>
+           </layout>
+           </item>
            </layout>
           </widget>
           <widget class="QWidget" name="lytTabDebug">
