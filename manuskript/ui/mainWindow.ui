@@ -1729,22 +1729,6 @@
               <property name="orientation">
                <enum>Qt::Horizontal</enum>
               </property>
-              <widget class="plotTreeView" name="lstOutlinePlots">
-               <property name="dragEnabled">
-                <bool>true</bool>
-               </property>
-               <property name="dragDropMode">
-                <enum>QAbstractItemView::DragOnly</enum>
-               </property>
-               <attribute name="headerVisible">
-                <bool>false</bool>
-               </attribute>
-               <column>
-                <property name="text">
-                 <string notr="true">1</string>
-                </property>
-               </column>
-              </widget>
               <widget class="QWidget" name="layoutWidget">
                <layout class="QVBoxLayout" name="verticalLayout_14">
                 <item>
@@ -3086,7 +3070,6 @@
   <tabstop>txtWorldDescription</tabstop>
   <tabstop>txtWorldPassion</tabstop>
   <tabstop>txtWorldConflict</tabstop>
-  <tabstop>lstOutlinePlots</tabstop>
   <tabstop>treeOutlineOutline</tabstop>
   <tabstop>btnOutlineAddFolder</tabstop>
   <tabstop>btnOutlineAddText</tabstop>
