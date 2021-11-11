@@ -3,6 +3,7 @@
 import importlib
 import os
 import re
+from itertools import accumulate
 
 from PyQt5.Qt import qVersion, PYQT_VERSION_STR
 from PyQt5.QtCore import (pyqtSignal, QSignalMapper, QTimer, QSettings, Qt, QPoint,
@@ -1716,12 +1717,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         print('updating statistics tab')
         compiled_textitems = self.mdlOutline.findCompiledItems()
         tuples = [item.integer_stats() for item in compiled_textitems]
-        wc = sum([t[0] if isinstance(t[0], int) else 0 for t in tuples])
-        goal = sum([t[1] if isinstance(t[1], int) else 0 for t in tuples])
-        self.lblStatsWC.setText("{} words / {}".format(wc, goal))
+        wc = [t[0] if isinstance(t[0], int) else 0 for t in tuples]
+        goal = [t[1] if isinstance(t[1], int) else 0 for t in tuples]
+        total_wc = sum(wc)
+        total_goal = sum(goal)
+        self.lblStatsWC.setText("{} words / {}".format(total_wc,
+                                                       total_goal))
 
-        if goal > 0:
-            progress = wc / goal
+        if total_goal > 0:
+            progress = total_wc / total_goal
             self.lblStatsProgress.show()
             rect = self.lblStatsProgress.geometry()
             rect = QRect(QPoint(0, 0), rect.size())
@@ -1735,8 +1739,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         titles = [item.title() for item in compiled_textitems]
         status = [item.status() for item in compiled_textitems]
         status = [int(i) if i else 0 for i in status]
+        cumulative_wc = list(accumulate(wc))
+        cumulative_goal = list(accumulate(goal))
 
-        print(titles)
+        for t, w, g in zip(titles, cumulative_wc, cumulative_goal):
+            print(f'{w}\t{g}\t{t}')
 
         #heatmap = plotWindow(self.statsHeatmap) 
         #heatmap = MplCanvas(self.statsHeatmap) 
